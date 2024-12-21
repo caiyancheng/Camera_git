@@ -12,7 +12,7 @@ def get_second_screen_resolution():
     second_screen = monitors[1]
     return second_screen.width, second_screen.height, second_screen.x, second_screen.y
 
-def generate_aruco_marker(pattern_id=0, marker_size=200, image_size=400):
+def generate_aruco_marker(pattern_id=100, marker_size=200, image_size=400):
     # 创建白色背景图像
     background_color = 255  # 白色背景 (255代表白色)
 
