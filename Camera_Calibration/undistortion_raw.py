@@ -26,4 +26,4 @@ dst = cv.undistort(img, mtx, dist, None, newcameramtx)
 # # crop the image
 x, y, w, h = roi
 dst = dst[y:y+h, x:x+w]
-HDRutils.imwrite(os.path.join(image_save_path, img_name + 'undistortion.exr'), dst)
+HDRutils.imwrite(os.path.join(image_save_path, img_name + 'raw_undistortion.png'), dst)
