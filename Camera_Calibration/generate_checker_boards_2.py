@@ -1,15 +1,13 @@
 import numpy as np
 import cv2
 
-k = 1000
-# 设置图像的尺寸和每个方块的边长 (单位: 像素)
-image_width = round(29.7 * k)
-image_height = round(21 * k)
-square_size = round(29700 / 27.7)
+k = 100
+rows = 27
+cols = 19
 
-# 计算棋盘的行列数
-rows = 19 #image_height // square_size
-cols = 27 #image_width // square_size
+image_width = cols * k
+image_height = rows * k
+square_size = k
 
 # 创建一个空的白色图像
 checkerboard = np.ones((image_height, image_width), dtype=np.uint8) * 255
@@ -26,4 +24,4 @@ for i in range(rows):
                          start_x + j * square_size:start_x + (j + 1) * square_size] = 0
 
 # 保存为图片
-cv2.imwrite('checkerboard_centered.png', checkerboard)
+cv2.imwrite('checkerboard_centered_2.png', checkerboard)
