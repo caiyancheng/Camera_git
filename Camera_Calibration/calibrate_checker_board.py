@@ -18,7 +18,7 @@ criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
 checkerboard_size_row = 18 #9
-checkerboard_size_col = 27 #14
+checkerboard_size_col = 26 #14
 x, y = np.mgrid[0:checkerboard_size_col, 0:checkerboard_size_row]
 objp = np.zeros((checkerboard_size_row * checkerboard_size_col, 3), np.float32)
 objp[:, :2] = np.column_stack((x.ravel(), y.ravel()))
@@ -34,14 +34,15 @@ objp[:, 1] -= center_y
 objpoints = []  # 3d point in real world space
 imgpoints = []  # 2d points in image plane.
 
-image_root_path = r'E:\sony_pictures\checker_board_pictures_cm_E05_F8_ISO_100_v1'
+distance = '80cm'
+image_root_path = rf'E:\sony_pictures\Calibration\{distance}'
 save_clibrate_image_path = image_root_path + '_calibrate'
 os.makedirs(save_clibrate_image_path, exist_ok=True)
-images = glob.glob(os.path.join(image_root_path, 'DSC*.jpg'))
+images = glob.glob(os.path.join(image_root_path, 'DSC*.png'))
 # resize_scale_list = np.logspace(np.log10(2), np.log10(10), 20)
 resize_scale_list = [1]
 
-save_images = False
+save_images = True
 for fname in tqdm(images):
     img = cv.imread(fname)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -78,5 +79,5 @@ ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.sha
 
 
 json_data = {'ret': ret, 'mtx': mtx.tolist(), 'dist': dist.tolist()}
-with open('calibration_result_SONY_a7R1.json', 'w') as outfile:
+with open(f'calibration_result_SONY_a7R1_{distance}.json', 'w') as outfile:
     json.dump(json_data, outfile)

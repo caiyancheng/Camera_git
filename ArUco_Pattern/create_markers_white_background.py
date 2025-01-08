@@ -42,5 +42,5 @@ cv2.imwrite(f"Markers/marker{pattern_id}_on_white.png", background)
 # cv2.moveWindow("Aruco Marker", x_center, y_center)
 #
 # # 等待按键，按任意键关闭窗口
-cv2.waitKey(0)
+# cv2.waitKey(0)
 # cv2.destroyAllWindows()
