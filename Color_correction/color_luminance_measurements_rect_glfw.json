@@ -1,0 +1,24 @@
+{
+    "all_results": [
+        {
+            "pixel_value": 0,
+            "Y_mean": 0.021155,
+            "x_mean": 0.44165,
+            "y_mean": 0.46045
+        },
+        {
+            "pixel_value": 255,
+            "Y_mean": 87.415,
+            "x_mean": 0.2781,
+            "y_mean": 0.3076
+        }
+    ],
+    "pixel_value_list": [
+        0,
+        255
+    ],
+    "Luminance_list": [
+        0.021155,
+        87.415
+    ]
+}

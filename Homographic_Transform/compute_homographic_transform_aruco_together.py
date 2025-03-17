@@ -5,7 +5,7 @@ import json
 import glob
 
 camera_name = 'a7R1'
-with open(f'../Camera_Calibration/calibration_result_SONY_{camera_name}.json', 'r') as fp:
+with open(f'../Camera_Calibration/calibration_result_SONY_{camera_name}_80cm.json', 'r') as fp:
     camera_calibration_result = json.load(fp)
 camera_matrix = np.array(camera_calibration_result['mtx'])
 dist_coeffs = np.array(camera_calibration_result['dist'])
@@ -14,10 +14,6 @@ dist_coeffs = np.array(camera_calibration_result['dist'])
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
 parameters =  cv2.aruco.DetectorParameters()
 detector = cv2.aruco.ArucoDetector(dictionary, parameters)
-
-# 准备标定所需的变量
-obj_points = []  # 3D世界坐标点
-img_points = []  # 2D图像坐标点
 
 # 图案的行列、边长和间隔
 rows = 11
@@ -32,15 +28,21 @@ img_root_path = r'E:\sony_pictures\ArUco_Homo_1/'
 img_path_list = glob.glob(os.path.join(img_root_path, 'DSC*.png'))
 
 for img_path in img_path_list:
+    obj_points = []  # 3D世界坐标点
+    img_points = []  # 2D图像坐标点
     img_ID = img_path.split('\\')[-1].split('.')[0]
     image = cv2.imread(img_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    resize_scale = 2
-    new_height = round(image.shape[0] / resize_scale)
-    new_width = round(image.shape[1] / resize_scale)
-    gray_resize = cv2.resize(gray, (new_width, new_height))
-
-    corners, ids, rejectedImgPoints = detector.detectMarkers(gray_resize)
+    resize_scale = 1
+    if resize_scale == 1:
+        gray_resize = gray.copy()
+    else:
+        new_height = round(image.shape[0] / resize_scale)
+        new_width = round(image.shape[1] / resize_scale)
+        gray_resize = cv2.resize(gray, (new_width, new_height))
+    blur_kernel_size = 13
+    gray_blur = cv2.GaussianBlur(gray_resize, (blur_kernel_size, blur_kernel_size), 0)
+    corners, ids, rejectedImgPoints = detector.detectMarkers(gray_blur)
 
     if ids is not None:
         for i, corner in enumerate(corners):
@@ -88,11 +90,11 @@ for img_path in img_path_list:
         cv2.drawFrameAxes(image, camera_matrix, dist_coeffs, rvec, tvec, length=0.1, thickness=20)
         json_data = {'obj_points': obj_points.tolist(), 'img_points': img_points.tolist(), 'retval': retval,
                      'rvec': rvec.tolist(), 'tvec': tvec.tolist()}
-        with open(f'homography_aruco_result_{img_ID}.json', 'w') as fp:
+        with open(os.path.join(img_root_path, f'homography_aruco_result_{img_ID}.json'), 'w') as fp:
             json.dump(json_data, fp)
     else:
         print("No markers detected.")
 
     # 显示结果
-    output_path = f'Display_ArUco_together_{img_ID}_downsample_{resize_scale}.png'
-    cv2.imwrite(output_path, image)
+    output_path = f'Display_ArUco_together_{img_ID}_resize_{resize_scale}_blur_{blur_kernel_size}.png'
+    cv2.imwrite(os.path.join(img_root_path, output_path), image)

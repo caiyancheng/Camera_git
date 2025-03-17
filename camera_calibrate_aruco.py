@@ -24,8 +24,8 @@ for image_name in images:
     img_width = img.shape[1]
     img_height = img.shape[0]
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # 检测Aruco标记
+    blur_kernel_size = 13
+    gray_blur = cv2.GaussianBlur(gray, (blur_kernel_size, blur_kernel_size), 0)
     corners, ids, rejectedImgPoints = detector.detectMarkers(gray)
 
     # 如果标记被找到

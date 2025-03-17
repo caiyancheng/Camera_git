@@ -76,8 +76,8 @@ for row in range(num_rows):
         background[y_offset:y_offset + marker_size_w, x_offset:x_offset + marker_size_w] = marker_image
 
 # 保存最终图像
-output_path = os.path.join(output_dir, "aruco_grid_screen.png")
-cv2.imwrite(output_path, background)
+# output_path = os.path.join(output_dir, "aruco_grid_screen.png")
+# cv2.imwrite(output_path, background)
 
 # 创建窗口
 window_name = "Aruco Grid"
