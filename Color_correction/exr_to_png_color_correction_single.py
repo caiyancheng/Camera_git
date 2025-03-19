@@ -10,7 +10,8 @@ from display_encoding import display_encode
 display_encode_tool = display_encode(500)
 
 image_root_path = r"E:\sony_pictures\Color_Fringing_2025_2_23_whole_process_new"
-exr_images = glob.glob(os.path.join(image_root_path, '*.exr'))
+exr_images = ['CC_XYZ_Homo_Transform_aruco_MTF_vignetting_undistortion_remap_INTER_LANCZOS4_center_crop_undistortion_remap_5.exr']
+exr_images = [os.path.join(image_root_path, i) for i in exr_images]
 for exr_file_name in tqdm(exr_images):
     exr = pyexr.open(exr_file_name)
     exr_data_camera_linear = exr.get()

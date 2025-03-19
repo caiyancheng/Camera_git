@@ -35,11 +35,10 @@ def create_mask_from_exr(data, scaled_x, scaled_y, threshold, mask_shape):
 
 # 主函数
 if __name__ == "__main__":
-    root_path = 'E:\sony_pictures\Color_Fringing_2025_2_23_whole_process'
-    exr_filename_list = ["CC_XYZ_Homo_Transform_color_fringing_letter_center_crop.exr",
-                         "CC_XYZ_Homo_Transform_color_fringing_white_circle_center_crop.exr",
-                         "CC_XYZ_Homo_Transform_color_fringing_black_circle_center_crop.exr",
-                         "CC_XYZ_Homo_Transform_aruco_center_crop.exr"]
+    root_path = 'E:\sony_pictures\Color_Fringing_2025_2_23_whole_process_new'
+    exr_filename_list = ["CC_XYZ_Homo_Transform_color_fringing_letter_MTF_vignetting_undistortion_remap_INTER_LANCZOS4_center_crop_undistortion_remap_5.exr",
+                         "CC_XYZ_Homo_Transform_color_fringing_white_circle_MTF_vignetting_undistortion_remap_INTER_LANCZOS4_center_crop_undistortion_remap_5.exr",
+                         "CC_XYZ_Homo_Transform_color_fringing_black_circle_MTF_vignetting_undistortion_remap_INTER_LANCZOS4_center_crop_undistortion_remap_5.exr"]
     threshold = 50
     k_scale = 5
     central_crop_width_pixel = int(3840 / 4)
